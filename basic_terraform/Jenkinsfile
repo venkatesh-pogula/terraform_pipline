@@ -1,0 +1,23 @@
+properties([parameters([booleanParam(defaultValue: true, description: 'This parameter is used for apply or destroy', name: 'Terraform_build')])])
+
+pipeline{
+    agent any
+    
+    stages{
+        stage ('scm'){
+            steps{
+                git "https://github.com/venkatesh-pogula/kubernerts.git"
+            }
+        }
+        stage ('terraform init'){
+            steps{
+            sh 'terraform init '
+         }
+     }
+    stage('terraform build'){
+        steps{
+            sh ${ 'Terraform_build' }
+         }
+     }
+  }
+}
